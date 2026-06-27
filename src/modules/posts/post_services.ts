@@ -10,7 +10,7 @@ const getMyPostsServices=async()=>{
 const getSinglePostServices=async()=>{
 
 };
-const registerPostServices=async()=>{
+const createPostServices=async()=>{
 
 };
 const updatePostServices=async()=>{
@@ -24,7 +24,7 @@ export const postsServices={
     getPostStatisticsServices,
     getMyPostsServices,
     getSinglePostServices,
-    registerPostServices,
+    createPostServices,
     updatePostServices,
     deletePostServices
 }

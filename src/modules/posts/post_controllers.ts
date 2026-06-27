@@ -13,7 +13,7 @@ const getMyPostsController=catchAsync((req:Request, res:Response, next:NextFunct
 const getSinglePostController=catchAsync((req:Request, res:Response, next:NextFunction)=>{
     
 });
-const registerPostController=catchAsync((req:Request, res:Response, next:NextFunction)=>{
+const createPostController=catchAsync((req:Request, res:Response, next:NextFunction)=>{
     
 });
 const updatePostController=catchAsync((req:Request, res:Response, next:NextFunction)=>{
@@ -27,7 +27,7 @@ export const postsControllers={
     getPostStatisticsController,
     getMyPostsController,
     getSinglePostController,
-    registerPostController,
+    createPostController,
     updatePostController,
     deletePostController
 }
