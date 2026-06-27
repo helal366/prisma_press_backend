@@ -1,5 +1,4 @@
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
-import { envVars } from "../config";
 
 const createToken=(jwtPayload:JwtPayload, jwtSecret:string, jwtExpiresIn:SignOptions)=>{
     const accessOrRefreshToekn=jwt.sign(jwtPayload, jwtSecret, {
@@ -9,8 +8,23 @@ const createToken=(jwtPayload:JwtPayload, jwtSecret:string, jwtExpiresIn:SignOpt
     return accessOrRefreshToekn
 }
 
+const verifyToken=(token:string, jwtSecret:string)=>{
+    try {
+        const decoded=jwt.verify(token, jwtSecret)      
+        return { 
+            success: true,
+            data:decoded 
+        };
+    } catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : "Token verification failed"
+        };
+    }
+}
 export const jwtTokens = {
-    createToken
+    createToken,
+    verifyToken
 }
 
 
