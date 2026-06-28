@@ -43,44 +43,79 @@ const getMyPostsServices=async(userId:string)=>{
     return myPosts
 };
 const getPostByIdServices=async(postId:string)=>{
-    const postById = await prisma.post.findUniqueOrThrow({
-        where:{
-            id:postId
-        },
+    // const postById = await prisma.post.findUniqueOrThrow({
+    //     where:{
+    //         id:postId
+    //     },
         
-        include: {
-            comments: true,
-            author: {
-                omit: {
-                    password: true
+    //     include: {
+    //         comments: true,
+    //         author: {
+    //             omit: {
+    //                 password: true
+    //             }
+    //         },
+    //         _count:{
+    //             select:{
+    //                 comments: true
+    //             }
+    //         }
+    //     },
+    // });
+    // const updatedPost = await prisma.post.update({
+    //    where:{
+    //      id:postId
+    //    },
+    //    data:{
+    //     views:{
+    //         increment:1
+    //     }
+    //    },
+    //    include:{
+    //     author:{
+    //         omit:{
+    //             password:true
+    //         }
+    //     },
+    //     comments: true
+    //    }
+    // });
+    // return updatedPost
+    const transactionResult = await prisma.$transaction(
+        async(tx)=>{
+             await tx.post.update({
+                where: {
+                    id: postId
+                },
+                data:{
+                    views: {
+                        increment: 1
+                    }
                 }
-            },
-            _count:{
-                select:{
-                    comments: true
-                }
-            }
-        },
-    });
-    const updatedPost = await prisma.post.update({
-       where:{
-         id:postId
-       },
-       data:{
-        views:{
-            increment:1
+             });
+            //  throw new Error("Fake error");
+             const post = await tx.post.findUniqueOrThrow({
+                where:{
+                    id:postId
+                },
+                include: {
+                    author: {
+                        omit: {
+                            password: true
+                        }
+                    },
+                    comments: true,
+                    _count: {
+                        select: {
+                            comments: true
+                        }
+                    }
+                },
+             });
+             return post;
         }
-       },
-       include:{
-        author:{
-            omit:{
-                password:true
-            }
-        },
-        comments: true
-       }
-    })
-    return updatedPost
+    );
+    return transactionResult;
 };
 const createPostServices=async(payload:ICreatePostPayload, userId:string)=>{
     const result = await prisma.post.create({
