@@ -8,3 +8,4 @@ export interface ICreatePostPayload {
   status?: PostStatus;
   tags: string[]
 }
+export type TUpdatePostPayload = Partial<ICreatePostPayload>
