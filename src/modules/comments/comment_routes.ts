@@ -5,9 +5,9 @@ import { Role } from "../../../generated/prisma/enums";
 
 export const commentRouter:Router=Router();
 
-commentRouter.get("/author/:authorId", commentControllers.getCommentAuthorController);
-commentRouter.get("/:commentId", commentControllers.getCommentController);
-commentRouter.post("/", userAuth(Role.ADMIN, Role.AUTHOR, Role.USER), commentControllers.commentRegisterController)
+commentRouter.get("/author/:authorId", commentControllers.getCommentsByAuthorIdController);
+commentRouter.get("/:commentId", commentControllers.getCommentByCommentIdController);
+commentRouter.post("/", userAuth(Role.ADMIN, Role.AUTHOR, Role.USER), commentControllers.createCommentController)
 commentRouter.patch("/:commentId", userAuth(Role.ADMIN, Role.AUTHOR, Role.USER), commentControllers.updateCommentController);
-commentRouter.patch("/:commentId/moderate", userAuth(Role.ADMIN), commentControllers.updateCommentModerateController);
-commentRouter.delete("/:commentId", userAuth(Role.ADMIN, Role.AUTHOR, Role.USER), commentControllers.deleteCommentController)
+commentRouter.patch("/:commentId/moderate", userAuth(Role.ADMIN), commentControllers.moderateCommentController);
+commentRouter.delete("/:commentId", userAuth(Role.ADMIN, Role.AUTHOR, Role.USER), commentControllers.deleteCommentController);

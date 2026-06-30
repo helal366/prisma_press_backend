@@ -5,7 +5,8 @@ import { sendResponse } from "../../utils/sendResponse";
 import { StatusCodes } from "http-status-codes";
 
 const getAllPostsController=catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-    const posts = await postsServices.getAllPostsServices();
+    const query = req.query;
+    const posts = await postsServices.getAllPostsServices(query);
     sendResponse(res, {
         success: true,
         statusCode:StatusCodes.OK,
@@ -13,8 +14,14 @@ const getAllPostsController=catchAsync(async(req:Request, res:Response, next:Nex
         data: {posts}
     })
 });
-const getPostStatisticsController=catchAsync((req:Request, res:Response, next:NextFunction)=>{
-    
+const getPostStatisticsController=catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+    const result = await postsServices.getPostStatisticsServices();
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: "All statistics are here.",
+        data: result
+    })
 });
 const getMyPostsController=catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
     const authorId = req.user?.id;
