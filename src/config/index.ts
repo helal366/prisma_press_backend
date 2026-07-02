@@ -10,9 +10,12 @@ interface EnvVariables{
     JWT_REFRESH_EXPIRES:string,
     BCRYPT_SALT_ROUND:string,
     APP_URL:string,
+    STRIPE_PRODUCT_ID:string,
+    STRIPE_SECRET_KEY:string,
+    STRIPE_PRICE_ID:string
 }
 const loadEnvVariables=():EnvVariables=> {
-    const envVars:string[] = ["PORT", "DATABASE_URL", "NODE_ENV", "JWT_ACCESS_SECRET", "JWT_ACCESS_EXPIRES", "BCRYPT_SALT_ROUND",  "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES", "APP_URL"];
+    const envVars:string[] = ["PORT", "DATABASE_URL", "NODE_ENV", "JWT_ACCESS_SECRET", "JWT_ACCESS_EXPIRES", "BCRYPT_SALT_ROUND",  "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES", "APP_URL", "STRIPE_PRODUCT_ID", "STRIPE_SECRET_KEY", "STRIPE_PRICE_ID"];
     envVars.forEach(element=>{
         if(!process.env[element]){
             throw new Error(`Required environmental variable missing: ${element}`)
@@ -28,6 +31,9 @@ const loadEnvVariables=():EnvVariables=> {
     JWT_REFRESH_EXPIRES:process.env.JWT_REFRESH_EXPIRES as string,
     BCRYPT_SALT_ROUND: process.env.BCRYPT_SALT_ROUND as string,
     APP_URL: process.env.APP_URL as string,
+    STRIPE_PRODUCT_ID: process.env.STRIPE_PRODUCT_ID as string,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY as string,
+    STRIPE_PRICE_ID:process.env.STRIPE_PRICE_ID as string
 }
 }
 export const envVars = loadEnvVariables()

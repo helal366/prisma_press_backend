@@ -20,3 +20,9 @@ enum CommnetStatus {
   REJECTED
   PENDING
 }
+
+enum SubscriptionStatus{
+  ACTIVE
+  CANCELLED
+  EXPIRED
+}

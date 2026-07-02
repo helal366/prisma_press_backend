@@ -8,6 +8,7 @@ import { commentRouter } from "./modules/comments/comment_routes";
 import { postRouter } from "./modules/posts/post_routes";
 import { notFound } from "./middlewares/notFound";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
+import { subscriptionRouter } from "./modules/subscription/subscription_routes";
 
 const app:Application = express();
 app.use(cors({
@@ -24,6 +25,7 @@ app.use("/api/users", userRouter);
 app.use("/api/auths", authRouter);
 app.use("/api/comments", commentRouter);
 app.use("/api/posts",postRouter);
+app.use("/api/subscription", subscriptionRouter);
 
 app.use(notFound);
 app.use(globalErrorHandler)
